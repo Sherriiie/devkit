@@ -102,6 +102,11 @@ body {
   margin-bottom: 28px;
 }
 
+.nav-section.info {
+  margin-top: auto;
+  margin-bottom: 12px;
+}
+
 .nav-section-title {
   font-size: 11px;
   font-weight: 600;
@@ -151,7 +156,6 @@ body {
 .nav-item.active .nav-item-icon { opacity: 0.85; }
 
 .sidebar-footer {
-  margin-top: auto;
   padding: 16px 24px;
   border-top: 1px solid var(--border);
 }
@@ -451,6 +455,247 @@ textarea::placeholder {
   font-family: var(--mono);
 }
 
+/* === ABOUT === */
+.about-hero {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, #ffffff 0%, #eef2ff 48%, #ffffff 100%);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 22px 24px;
+  margin-bottom: 18px;
+  box-shadow: var(--shadow-sm);
+}
+
+.about-hero::after {
+  content: '';
+  position: absolute;
+  top: -40px;
+  right: -40px;
+  width: 160px;
+  height: 160px;
+  background: radial-gradient(circle, rgba(99,102,241,.2) 0%, rgba(99,102,241,0) 72%);
+  pointer-events: none;
+}
+
+.about-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--accent-hover);
+  background: #ffffff;
+  border: 1px solid #dfe3ff;
+  border-radius: 999px;
+  padding: 4px 10px;
+  margin-bottom: 10px;
+}
+
+.about-hero-title {
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: -0.6px;
+  color: var(--text);
+  margin-bottom: 8px;
+}
+
+.about-hero-copy {
+  max-width: 760px;
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--text-2);
+}
+
+.about-pill-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.about-pill {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-2);
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 5px 10px;
+}
+
+.about-pill-row .about-pill:nth-child(1) {
+  color: #4338ca;
+  background: #eef2ff;
+  border-color: #c7d2fe;
+}
+
+.about-pill-row .about-pill:nth-child(2) {
+  color: #0369a1;
+  background: #e0f2fe;
+  border-color: #bae6fd;
+}
+
+.about-pill-row .about-pill:nth-child(3) {
+  color: #0f766e;
+  background: #ccfbf1;
+  border-color: #99f6e4;
+}
+
+.about-pill-row .about-pill:nth-child(4) {
+  color: #b45309;
+  background: #fef3c7;
+  border-color: #fde68a;
+}
+
+.about-pill-row .about-pill:nth-child(5) {
+  color: #9d174d;
+  background: #fce7f3;
+  border-color: #fbcfe8;
+}
+
+.about-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 14px;
+  margin-bottom: 18px;
+}
+
+.about-card {
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px 18px;
+  box-shadow: var(--shadow-xs);
+  transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+}
+
+.about-card-what {
+  background: linear-gradient(180deg, #eef2ff 0%, #ffffff 60%);
+  border-color: #c7d2fe;
+}
+
+.about-card-who {
+  background: linear-gradient(180deg, #ecfeff 0%, #ffffff 60%);
+  border-color: #a5f3fc;
+}
+
+.about-card-goal {
+  background: linear-gradient(180deg, #fffbeb 0%, #ffffff 60%);
+  border-color: #fde68a;
+}
+
+.about-card:hover {
+  transform: translateY(-2px);
+  border-color: #d7dcff;
+  box-shadow: 0 6px 16px rgba(17,24,39,.08);
+}
+
+.about-card h3 {
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  color: var(--text-3);
+  margin-bottom: 8px;
+}
+
+.about-card-title-what {
+  color: #3730a3;
+}
+
+.about-card-title-who {
+  color: #0f766e;
+}
+
+.about-card-title-goal {
+  color: #92400e;
+}
+
+.about-card p {
+  font-size: 14px;
+  color: var(--text-2);
+  line-height: 1.65;
+}
+
+.about-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 10px 16px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.about-list li {
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  padding: 12px 13px;
+  font-size: 13px;
+  color: var(--text-2);
+  box-shadow: var(--shadow-xs);
+  position: relative;
+  padding-left: 34px;
+}
+
+.about-list li::before {
+  content: '+';
+  position: absolute;
+  left: 12px;
+  top: 12px;
+  width: 14px;
+  height: 14px;
+  line-height: 14px;
+  text-align: center;
+  font-size: 11px;
+  font-weight: 700;
+  color: #fff;
+  background: var(--accent);
+  border-radius: 4px;
+}
+
+.about-note {
+  margin-top: 16px;
+  padding: 14px 16px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--surface-inset);
+  color: var(--text-2);
+  font-size: 13px;
+  line-height: 1.65;
+}
+
+.about-usecases {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.usecase {
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  padding: 14px;
+}
+
+.usecase-title {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+  color: var(--text-3);
+  margin-bottom: 7px;
+}
+
+.usecase-copy {
+  font-size: 13px;
+  color: var(--text-2);
+  line-height: 1.6;
+}
+
 /* === SCROLLBAR === */
 ::-webkit-scrollbar { width: 6px; height: 6px; }
 ::-webkit-scrollbar-track { background: transparent; }
@@ -507,8 +752,16 @@ textarea::placeholder {
       </div>
     </div>
 
+    <div class="nav-section info">
+      <div class="nav-section-title">Info</div>
+      <div class="nav-item" data-panel="about-page">
+        <span class="nav-item-icon">ⓘ</span>
+        <span>About DevKit</span>
+      </div>
+    </div>
+
     <div class="sidebar-footer">
-      <div class="sidebar-footer-text">DevKit v1.0 · Open Source</div>
+      <div class="sidebar-footer-text">DevKit v1.0</div>
     </div>
   </aside>
 
@@ -620,6 +873,100 @@ textarea::placeholder {
           <label class="editor-label">Modified</label>
           <textarea id="diff-right" placeholder="Paste modified text..."></textarea>
         </div>
+      </div>
+    </div>
+
+    <!-- About -->
+    <div class="panel" id="about-page">
+      <div class="panel-header">
+        <h1 class="panel-title">About DevKit</h1>
+        <p class="panel-subtitle">A focused toolkit for JSON and text workflows in modern development</p>
+      </div>
+
+      <section class="about-hero">
+        <span class="about-kicker">Built for daily debugging</span>
+        <h2 class="about-hero-title">Fast tools, less context switching</h2>
+        <p class="about-hero-copy">
+          DevKit brings the JSON and text utilities developers use most into one focused workspace.
+          Clean output, clear feedback, and practical controls help you inspect payloads and resolve
+          issues in minutes instead of tab-hopping across multiple tools.
+        </p>
+        <div class="about-pill-row">
+          <span class="about-pill">JSON formatting</span>
+          <span class="about-pill">Validation hints</span>
+          <span class="about-pill">Escape and unescape</span>
+          <span class="about-pill">Diff comparison</span>
+          <span class="about-pill">Responsive by default</span>
+        </div>
+      </section>
+
+      <div class="about-grid">
+        <article class="about-card about-card-what">
+          <h3 class="about-card-title-what">What It Is</h3>
+          <p>
+            DevKit is a lightweight browser-based utility built for developers who handle API payloads,
+            logs, and structured text every day. It combines practical tools in one clean workspace so
+            you can debug faster with less context switching.
+          </p>
+        </article>
+        <article class="about-card about-card-who">
+          <h3 class="about-card-title-who">Who It Is For</h3>
+          <p>
+            Backend developers, frontend engineers, QA teams, and DevOps practitioners can use DevKit to
+            inspect JSON, validate syntax, transform escaped strings, and compare revisions during testing
+            and troubleshooting.
+          </p>
+        </article>
+        <article class="about-card about-card-goal">
+          <h3 class="about-card-title-goal">Design Goal</h3>
+          <p>
+            Fast interactions, readable output, and minimal friction. Every feature is designed to solve
+            common data debugging tasks quickly while keeping the interface simple and focused.
+          </p>
+        </article>
+      </div>
+
+      <div class="panel-header" style="margin-bottom:12px;">
+        <h2 class="panel-title" style="font-size:18px;">Feature Coverage</h2>
+      </div>
+      <ul class="about-list">
+        <li>JSON Viewer and Formatter with syntax highlighting</li>
+        <li>Expand and collapse nested JSON structures</li>
+        <li>JSON Minify for compact output</li>
+        <li>Best-effort formatting for malformed JSON input</li>
+        <li>Escape text into JSON-safe string format</li>
+        <li>Unescape newline, tab, quote, and backslash sequences</li>
+        <li>JSON syntax validation with clear pass/fail status</li>
+        <li>Error context with line and column location hints</li>
+        <li>Validation metadata: type, entries, size, lines, and depth</li>
+        <li>Side-by-side text diff with add/delete highlights</li>
+        <li>Change counters for added and removed lines</li>
+        <li>Swap inputs and synchronized diff scrolling</li>
+        <li>Copy and clear actions for faster iteration</li>
+        <li>Responsive layout for desktop and mobile use</li>
+      </ul>
+
+      <div class="panel-header" style="margin-top:18px;margin-bottom:12px;">
+        <h2 class="panel-title" style="font-size:18px;">Common Use Cases</h2>
+      </div>
+      <div class="about-usecases">
+        <article class="usecase">
+          <div class="usecase-title">API Debugging</div>
+          <p class="usecase-copy">Inspect request and response payloads, then validate structure before integration tests.</p>
+        </article>
+        <article class="usecase">
+          <div class="usecase-title">Release Review</div>
+          <p class="usecase-copy">Compare config and schema updates line by line to catch risky changes quickly.</p>
+        </article>
+        <article class="usecase">
+          <div class="usecase-title">Log Cleanup</div>
+          <p class="usecase-copy">Unescape raw log strings into readable text and copy cleaned output to tickets.</p>
+        </article>
+      </div>
+
+      <div class="about-note">
+        DevKit runs directly in your browser UI and is designed to keep your workflow local, transparent,
+        and efficient. It is ideal for daily API development, payload inspection, and troubleshooting tasks.
       </div>
     </div>
   </main>
