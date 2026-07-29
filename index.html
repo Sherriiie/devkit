@@ -4,27 +4,38 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>DevKit</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg: #f8f9fb;
+  --bg: #f4f5f7;
   --surface: #ffffff;
-  --surface-2: #f1f3f9;
-  --accent: #4f46e5;
-  --accent-hover: #4338ca;
+  --surface-raised: #ffffff;
+  --surface-inset: #f9fafb;
+  --accent: #6366f1;
+  --accent-hover: #4f46e5;
   --accent-subtle: #eef2ff;
-  --text: #0f172a;
-  --text-2: #475569;
-  --text-3: #94a3b8;
+  --accent-glow: rgba(99, 102, 241, 0.08);
+  --text: #111827;
+  --text-2: #4b5563;
+  --text-3: #9ca3af;
   --border: #e5e7eb;
-  --green: #10b981;
+  --border-subtle: #f3f4f6;
+  --green: #059669;
   --green-bg: #ecfdf5;
-  --red: #ef4444;
+  --green-border: #a7f3d0;
+  --red: #dc2626;
   --red-bg: #fef2f2;
-  --orange: #f59e0b;
-  --radius: 8px;
+  --red-border: #fecaca;
+  --orange: #d97706;
+  --radius: 10px;
+  --radius-lg: 14px;
+  --shadow-xs: 0 1px 2px rgba(0,0,0,.03);
+  --shadow-sm: 0 1px 3px rgba(0,0,0,.04), 0 1px 2px rgba(0,0,0,.03);
+  --shadow-md: 0 4px 12px rgba(0,0,0,.05);
+  --shadow-focus: 0 0 0 3px var(--accent-glow);
   --mono: 'JetBrains Mono', monospace;
   --sans: 'Inter', system-ui, sans-serif;
+  --transition: 150ms cubic-bezier(.4,0,.2,1);
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -35,37 +46,42 @@ body {
   color: var(--text);
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 /* === LAYOUT === */
 .app {
   display: grid;
-  grid-template-columns: 220px 1fr;
+  grid-template-columns: 240px 1fr;
   min-height: 100vh;
 }
 
 /* === SIDEBAR === */
 .sidebar {
-  background: var(--surface);
+  background: #fafafa;
   border-right: 1px solid var(--border);
-  padding: 24px 0;
+  padding: 28px 0;
   display: flex;
   flex-direction: column;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
 }
 
 .sidebar-logo {
-  padding: 0 20px;
-  margin-bottom: 32px;
+  padding: 0 24px;
+  margin-bottom: 36px;
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
 }
 
 .sidebar-logo-icon {
-  width: 32px;
-  height: 32px;
-  background: var(--accent);
-  border-radius: 8px;
+  width: 34px;
+  height: 34px;
+  background: var(--text);
+  border-radius: 9px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -76,65 +92,78 @@ body {
 }
 
 .sidebar-logo-text {
-  font-size: 17px;
-  font-weight: 700;
+  font-size: 18px;
+  font-weight: 800;
   color: var(--text);
+  letter-spacing: -0.5px;
 }
 
 .nav-section {
-  margin-bottom: 24px;
+  margin-bottom: 28px;
 }
 
 .nav-section-title {
-  font-size: 10px;
-  font-weight: 700;
+  font-size: 11px;
+  font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.8px;
+  letter-spacing: 0.6px;
   color: var(--text-3);
-  padding: 0 20px;
-  margin-bottom: 6px;
+  padding: 0 24px;
+  margin-bottom: 8px;
 }
 
 .nav-item {
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 9px 20px;
+  gap: 11px;
+  padding: 10px 24px;
+  margin: 2px 12px;
   cursor: pointer;
-  font-size: 13px;
+  font-size: 13.5px;
   font-weight: 500;
   color: var(--text-2);
-  transition: all .12s ease;
-  border-left: 3px solid transparent;
+  border-radius: 8px;
+  transition: all var(--transition);
 }
 
 .nav-item:hover {
-  background: var(--surface-2);
+  background: var(--surface);
   color: var(--text);
 }
 
 .nav-item.active {
-  background: var(--accent-subtle);
-  color: var(--accent);
-  border-left-color: var(--accent);
+  background: var(--surface);
+  color: var(--text);
   font-weight: 600;
+  box-shadow: var(--shadow-sm);
 }
 
 .nav-item-icon {
-  width: 18px;
-  height: 18px;
-  opacity: 0.6;
+  width: 20px;
+  height: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 14px;
+  opacity: 0.45;
 }
 
-.nav-item.active .nav-item-icon { opacity: 1; }
+.nav-item.active .nav-item-icon { opacity: 0.85; }
+
+.sidebar-footer {
+  margin-top: auto;
+  padding: 16px 24px;
+  border-top: 1px solid var(--border);
+}
+
+.sidebar-footer-text {
+  font-size: 11px;
+  color: var(--text-3);
+}
 
 /* === MAIN === */
 .main {
-  padding: 32px 40px;
+  padding: 36px 44px;
   overflow-y: auto;
   height: 100vh;
 }
@@ -147,11 +176,21 @@ body {
 
 .panel.active { display: flex; }
 
+.panel-header {
+  margin-bottom: 24px;
+}
+
 .panel-title {
-  font-size: 20px;
+  font-size: 22px;
   font-weight: 700;
   color: var(--text);
-  margin-bottom: 20px;
+  letter-spacing: -0.3px;
+}
+
+.panel-subtitle {
+  font-size: 13px;
+  color: var(--text-3);
+  margin-top: 4px;
 }
 
 /* === TOOLBAR === */
@@ -160,41 +199,61 @@ body {
   gap: 8px;
   margin-bottom: 20px;
   align-items: center;
+  padding: 12px 16px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-xs);
 }
 
 .btn {
-  padding: 8px 16px;
+  padding: 7px 14px;
   border: 1px solid var(--border);
   background: var(--surface);
-  color: var(--text);
+  color: var(--text-2);
   border-radius: 6px;
   cursor: pointer;
   font-size: 13px;
   font-weight: 500;
   font-family: var(--sans);
-  transition: all .12s ease;
+  transition: all var(--transition);
 }
 
 .btn:hover {
-  background: var(--surface-2);
+  background: var(--surface-inset);
+  color: var(--text);
   border-color: #d1d5db;
 }
 
-.btn:active { transform: scale(0.97); }
+.btn:active { transform: scale(0.96); }
 
 .btn.primary {
   background: var(--accent);
-  border-color: var(--accent);
+  border-color: transparent;
   color: #fff;
+  box-shadow: 0 1px 4px rgba(99,102,241,.2);
 }
 
-.btn.primary:hover { background: var(--accent-hover); }
+.btn.primary:hover {
+  background: var(--accent-hover);
+  box-shadow: 0 2px 8px rgba(99,102,241,.3);
+}
+
+.toolbar-separator {
+  width: 1px;
+  height: 20px;
+  background: var(--border);
+  margin: 0 4px;
+}
 
 .status {
   margin-left: auto;
   font-size: 12px;
   font-weight: 500;
   color: var(--text-3);
+  display: flex;
+  align-items: center;
+  gap: 5px;
 }
 
 /* === EDITOR === */
@@ -213,9 +272,11 @@ body {
 }
 
 .editor-label {
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 600;
-  color: var(--text-2);
+  color: var(--text-3);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
   margin-bottom: 8px;
 }
 
@@ -223,50 +284,67 @@ textarea {
   flex: 1;
   resize: none;
   background: var(--surface);
-  border: 1px solid var(--border);
+  border: 1.5px solid var(--border);
   border-radius: var(--radius);
   color: var(--text);
   font-family: var(--mono);
   font-size: 13px;
-  line-height: 1.6;
-  padding: 14px 16px;
+  line-height: 1.65;
+  padding: 16px 18px;
   outline: none;
-  transition: border-color .15s, box-shadow .15s;
+  transition: border-color var(--transition), box-shadow var(--transition);
   width: 100%;
+  box-shadow: var(--shadow-xs);
 }
+
+textarea:hover { border-color: #d1d5db; }
 
 textarea:focus {
   border-color: var(--accent);
-  box-shadow: 0 0 0 3px var(--accent-subtle);
+  box-shadow: var(--shadow-focus);
 }
 
-textarea::placeholder { color: var(--text-3); }
+textarea::placeholder {
+  color: var(--text-3);
+  font-weight: 400;
+}
 
 /* === OUTPUT PANELS === */
 .output-panel {
   flex: 1;
   overflow: auto;
   background: var(--surface);
-  border: 1px solid var(--border);
+  border: 1.5px solid var(--border);
   border-radius: var(--radius);
-  padding: 14px 16px;
+  padding: 16px 18px;
   font-family: var(--mono);
   font-size: 13px;
   line-height: 1.7;
   min-height: 0;
+  box-shadow: var(--shadow-xs);
 }
 
 /* === JSON SYNTAX === */
-.json-key { color: #7c3aed; }
+.json-key { color: #7c3aed; font-weight: 500; }
 .json-string { color: #059669; }
 .json-number { color: #d97706; }
-.json-bool { color: #2563eb; }
-.json-null { color: var(--text-3); }
+.json-bool { color: #2563eb; font-weight: 500; }
+.json-null { color: var(--text-3); font-style: italic; }
 .json-bracket { color: #9ca3af; }
 
 .json-toggle { cursor: pointer; user-select: none; }
-.json-toggle::before { content: '▾ '; font-size: 10px; color: var(--text-3); }
-.json-toggle.collapsed::before { content: '▸ '; }
+.json-toggle::before {
+  content: '▾';
+  font-size: 10px;
+  color: var(--text-3);
+  margin-right: 4px;
+  display: inline-block;
+  transition: transform var(--transition);
+}
+.json-toggle.collapsed::before {
+  content: '▸';
+}
+.json-children { transition: all var(--transition); }
 .json-children.hidden { display: none; }
 
 /* === DIFF === */
@@ -282,28 +360,43 @@ textarea::placeholder { color: var(--text-3); }
   flex: 1;
   overflow: auto;
   background: var(--surface);
-  border: 1px solid var(--border);
+  border: 1.5px solid var(--border);
   border-radius: var(--radius);
-  padding: 14px 16px;
+  padding: 16px 18px;
   font-family: var(--mono);
   font-size: 13px;
   line-height: 1.7;
   white-space: pre-wrap;
+  box-shadow: var(--shadow-xs);
 }
 
-.diff-add { background: #dcfce7; color: #166534; border-radius: 2px; padding: 1px 0; }
-.diff-del { background: #fee2e2; color: #991b1b; border-radius: 2px; padding: 1px 0; }
+.diff-add {
+  background: #dcfce7;
+  color: #166534;
+  border-radius: 3px;
+  padding: 1px 2px;
+  margin: 1px 0;
+}
+
+.diff-del {
+  background: #fee2e2;
+  color: #991b1b;
+  border-radius: 3px;
+  padding: 1px 2px;
+  margin: 1px 0;
+}
 
 /* === VALIDATOR === */
 .cursor-bar {
-  padding: 5px 14px;
-  background: var(--surface-2);
-  border: 1px solid var(--border);
+  padding: 6px 16px;
+  background: var(--surface-inset);
+  border: 1.5px solid var(--border);
   border-top: none;
   border-radius: 0 0 var(--radius) var(--radius);
   font-family: var(--mono);
   font-size: 11px;
   color: var(--text-3);
+  font-weight: 500;
 }
 
 .result-card {
@@ -312,23 +405,39 @@ textarea::placeholder { color: var(--text-3); }
   gap: 10px;
   padding: 14px 18px;
   border-radius: var(--radius);
-  margin-bottom: 16px;
+  margin-bottom: 20px;
   font-weight: 600;
   font-size: 14px;
 }
 
-.result-card.success { background: var(--green-bg); color: var(--green); border: 1px solid #a7f3d0; }
-.result-card.error { background: var(--red-bg); color: var(--red); border: 1px solid #fecaca; }
+.result-card.success {
+  background: var(--green-bg);
+  color: var(--green);
+  border: 1px solid var(--green-border);
+}
+
+.result-card.error {
+  background: var(--red-bg);
+  color: var(--red);
+  border: 1px solid var(--red-border);
+}
 
 .meta-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-  gap: 12px;
+  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+  gap: 16px;
+}
+
+.meta-item {
+  padding: 12px 14px;
+  background: var(--surface-inset);
+  border-radius: 8px;
+  border: 1px solid var(--border-subtle);
 }
 
 .meta-item-label {
   font-size: 10px;
-  font-weight: 700;
+  font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.5px;
   color: var(--text-3);
@@ -336,22 +445,31 @@ textarea::placeholder { color: var(--text-3); }
 }
 
 .meta-item-value {
-  font-size: 15px;
-  font-weight: 600;
+  font-size: 16px;
+  font-weight: 700;
   color: var(--text);
+  font-family: var(--mono);
 }
 
 /* === SCROLLBAR === */
-::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar { width: 6px; height: 6px; }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: #9ca3af; }
+::-webkit-scrollbar-thumb { background: #e5e7eb; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #d1d5db; }
 
 /* === RESPONSIVE === */
-@media (max-width: 768px) {
+@media (max-width: 900px) {
   .app { grid-template-columns: 1fr; }
-  .sidebar { display: none; }
-  .main { padding: 20px; }
+  .sidebar {
+    position: fixed;
+    left: -240px;
+    z-index: 200;
+    height: 100vh;
+    box-shadow: var(--shadow-md);
+    transition: left var(--transition);
+  }
+  .sidebar.open { left: 0; }
+  .main { padding: 24px 20px; }
   .editor-grid, .diff-grid { grid-template-columns: 1fr; }
 }
 </style>
@@ -359,7 +477,6 @@ textarea::placeholder { color: var(--text-3); }
 <body>
 
 <div class="app">
-  <!-- Sidebar -->
   <aside class="sidebar">
     <div class="sidebar-logo">
       <div class="sidebar-logo-icon">{}</div>
@@ -367,9 +484,9 @@ textarea::placeholder { color: var(--text-3); }
     </div>
 
     <div class="nav-section">
-      <div class="nav-section-title">JSON Tools</div>
+      <div class="nav-section-title">JSON</div>
       <div class="nav-item active" data-panel="json-viewer">
-        <span class="nav-item-icon">{ }</span>
+        <span class="nav-item-icon">⎔</span>
         <span>Viewer / Format</span>
       </div>
       <div class="nav-item" data-panel="json-escape">
@@ -377,29 +494,35 @@ textarea::placeholder { color: var(--text-3); }
         <span>Escape / Unescape</span>
       </div>
       <div class="nav-item" data-panel="json-validator">
-        <span class="nav-item-icon">✓</span>
+        <span class="nav-item-icon">◎</span>
         <span>Validator</span>
       </div>
     </div>
 
     <div class="nav-section">
-      <div class="nav-section-title">Text Tools</div>
+      <div class="nav-section-title">Text</div>
       <div class="nav-item" data-panel="diff-checker">
-        <span class="nav-item-icon">≠</span>
+        <span class="nav-item-icon">⫶</span>
         <span>Diff Compare</span>
       </div>
     </div>
+
+    <div class="sidebar-footer">
+      <div class="sidebar-footer-text">DevKit v1.0 · Open Source</div>
+    </div>
   </aside>
 
-  <!-- Main content -->
   <main class="main">
-
     <!-- JSON Viewer -->
     <div class="panel active" id="json-viewer">
-      <h1 class="panel-title">JSON Viewer</h1>
+      <div class="panel-header">
+        <h1 class="panel-title">JSON Viewer</h1>
+        <p class="panel-subtitle">Format, minify, and explore JSON data with syntax highlighting</p>
+      </div>
       <div class="toolbar">
         <button class="btn primary" onclick="formatJSON()">Format</button>
         <button class="btn" onclick="minifyJSON()">Minify</button>
+        <div class="toolbar-separator"></div>
         <button class="btn" onclick="copyOutput('json-output')">Copy</button>
         <button class="btn" onclick="clearJSON()">Clear</button>
         <span class="status" id="json-status"></span>
@@ -418,10 +541,14 @@ textarea::placeholder { color: var(--text-3); }
 
     <!-- JSON Escape -->
     <div class="panel" id="json-escape">
-      <h1 class="panel-title">Escape / Unescape</h1>
+      <div class="panel-header">
+        <h1 class="panel-title">Escape / Unescape</h1>
+        <p class="panel-subtitle">Escape special characters or unescape \n, \t, \" sequences</p>
+      </div>
       <div class="toolbar">
         <button class="btn primary" onclick="escapeJSON()">Escape</button>
         <button class="btn" onclick="unescapeJSON()">Unescape</button>
+        <div class="toolbar-separator"></div>
         <button class="btn" onclick="copyOutput('escape-output')">Copy</button>
         <button class="btn" onclick="clearEscape()">Clear</button>
       </div>
@@ -439,7 +566,10 @@ textarea::placeholder { color: var(--text-3); }
 
     <!-- JSON Validator -->
     <div class="panel" id="json-validator">
-      <h1 class="panel-title">JSON Validator</h1>
+      <div class="panel-header">
+        <h1 class="panel-title">JSON Validator</h1>
+        <p class="panel-subtitle">Check JSON syntax, view structure metadata, and locate errors</p>
+      </div>
       <div class="toolbar">
         <button class="btn primary" onclick="validateJSON()">Validate</button>
         <button class="btn" onclick="clearValidator()">Clear</button>
@@ -460,10 +590,14 @@ textarea::placeholder { color: var(--text-3); }
 
     <!-- Text Diff -->
     <div class="panel" id="diff-checker">
-      <h1 class="panel-title">Text Diff</h1>
+      <div class="panel-header">
+        <h1 class="panel-title">Text Diff</h1>
+        <p class="panel-subtitle">Compare two blocks of text and highlight differences line by line</p>
+      </div>
       <div class="toolbar">
         <button class="btn primary" onclick="runDiff()">Compare</button>
         <button class="btn" onclick="swapDiff()">Swap</button>
+        <div class="toolbar-separator"></div>
         <button class="btn" onclick="clearDiff()">Clear</button>
         <span class="status" id="diff-status"></span>
       </div>
@@ -477,7 +611,7 @@ textarea::placeholder { color: var(--text-3); }
           <div class="diff-panel" id="diff-output-right"></div>
         </div>
       </div>
-      <div class="editor-grid" style="flex:0.5;">
+      <div class="editor-grid" style="flex:0.45;">
         <div class="editor-pane">
           <label class="editor-label">Original</label>
           <textarea id="diff-left" placeholder="Paste original text..."></textarea>
@@ -488,7 +622,6 @@ textarea::placeholder { color: var(--text-3); }
         </div>
       </div>
     </div>
-
   </main>
 </div>
 
@@ -604,13 +737,13 @@ function runDiff() {
     if (ci < lcs.length && li < leftLines.length && ri < rightLines.length && leftLines[li] === lcs[ci] && rightLines[ri] === lcs[ci]) {
       hL += '<div>' + esc(leftLines[li]) + '&nbsp;</div>'; hR += '<div>' + esc(rightLines[ri]) + '&nbsp;</div>'; li++; ri++; ci++;
     } else if (ci < lcs.length && ri < rightLines.length && rightLines[ri] === lcs[ci]) {
-      hL += '<div class="diff-del">' + esc(leftLines[li]) + '&nbsp;</div>'; hR += '<div style="opacity:.25">&nbsp;</div>'; li++; dels++;
+      hL += '<div class="diff-del">' + esc(leftLines[li]) + '&nbsp;</div>'; hR += '<div style="opacity:.2">&nbsp;</div>'; li++; dels++;
     } else if (ci < lcs.length && li < leftLines.length && leftLines[li] === lcs[ci]) {
-      hL += '<div style="opacity:.25">&nbsp;</div>'; hR += '<div class="diff-add">' + esc(rightLines[ri]) + '&nbsp;</div>'; ri++; adds++;
+      hL += '<div style="opacity:.2">&nbsp;</div>'; hR += '<div class="diff-add">' + esc(rightLines[ri]) + '&nbsp;</div>'; ri++; adds++;
     } else {
       if (li < leftLines.length && ri < rightLines.length) { hL += '<div class="diff-del">' + esc(leftLines[li]) + '&nbsp;</div>'; hR += '<div class="diff-add">' + esc(rightLines[ri]) + '&nbsp;</div>'; li++; ri++; dels++; adds++; }
-      else if (li < leftLines.length) { hL += '<div class="diff-del">' + esc(leftLines[li]) + '&nbsp;</div>'; hR += '<div style="opacity:.25">&nbsp;</div>'; li++; dels++; }
-      else if (ri < rightLines.length) { hL += '<div style="opacity:.25">&nbsp;</div>'; hR += '<div class="diff-add">' + esc(rightLines[ri]) + '&nbsp;</div>'; ri++; adds++; }
+      else if (li < leftLines.length) { hL += '<div class="diff-del">' + esc(leftLines[li]) + '&nbsp;</div>'; hR += '<div style="opacity:.2">&nbsp;</div>'; li++; dels++; }
+      else if (ri < rightLines.length) { hL += '<div style="opacity:.2">&nbsp;</div>'; hR += '<div class="diff-add">' + esc(rightLines[ri]) + '&nbsp;</div>'; ri++; adds++; }
     }
   }
   oL.innerHTML = hL || '<span style="color:var(--text-3)">No content</span>';
@@ -652,11 +785,11 @@ function validateJSON() {
     const size = typeof obj === 'object' && obj !== null ? Object.keys(obj).length : null;
     let h = '<div class="result-card success">✓ Valid JSON</div>';
     h += '<div class="meta-grid">';
-    h += '<div><div class="meta-item-label">Type</div><div class="meta-item-value">' + type + '</div></div>';
-    if (size !== null) h += '<div><div class="meta-item-label">Entries</div><div class="meta-item-value">' + size + '</div></div>';
-    h += '<div><div class="meta-item-label">Size</div><div class="meta-item-value">' + input.length + '</div></div>';
-    h += '<div><div class="meta-item-label">Lines</div><div class="meta-item-value">' + input.split('\n').length + '</div></div>';
-    h += '<div><div class="meta-item-label">Depth</div><div class="meta-item-value">' + getDepth(obj) + '</div></div>';
+    h += '<div class="meta-item"><div class="meta-item-label">Type</div><div class="meta-item-value">' + type + '</div></div>';
+    if (size !== null) h += '<div class="meta-item"><div class="meta-item-label">Entries</div><div class="meta-item-value">' + size + '</div></div>';
+    h += '<div class="meta-item"><div class="meta-item-label">Size</div><div class="meta-item-value">' + input.length + '</div></div>';
+    h += '<div class="meta-item"><div class="meta-item-label">Lines</div><div class="meta-item-value">' + input.split('\n').length + '</div></div>';
+    h += '<div class="meta-item"><div class="meta-item-label">Depth</div><div class="meta-item-value">' + getDepth(obj) + '</div></div>';
     h += '</div>';
     output.innerHTML = h;
     status.textContent = '✓ Valid'; status.style.color = 'var(--green)';
@@ -669,12 +802,12 @@ function validateJSON() {
       const col = pos - input.lastIndexOf('\n', pos - 1);
       const before = input.substring(Math.max(0, pos-30), pos);
       const after = input.substring(pos, pos+30);
-      posInfo = '<div style="margin-top:14px;padding:12px 14px;background:var(--surface-2);border-radius:6px;">';
-      posInfo += '<div style="font-size:11px;color:var(--text-3);margin-bottom:6px;">Line ' + line + ', Col ' + col + '</div>';
-      posInfo += '<code style="font-size:12px;word-break:break-all;">' + esc(before) + '<span style="background:var(--red);color:#fff;padding:1px 3px;border-radius:2px;font-weight:700;">▌</span>' + esc(after) + '</code></div>';
+      posInfo = '<div style="margin-top:14px;padding:14px 16px;background:var(--surface-inset);border-radius:8px;border:1px solid var(--border);">';
+      posInfo += '<div style="font-size:11px;color:var(--text-3);margin-bottom:6px;font-weight:500;">Line ' + line + ', Col ' + col + '</div>';
+      posInfo += '<code style="font-size:12px;word-break:break-all;line-height:1.6;">' + esc(before) + '<span style="background:var(--red);color:#fff;padding:1px 4px;border-radius:3px;font-weight:600;">▌</span>' + esc(after) + '</code></div>';
     }
     let h = '<div class="result-card error">✗ Invalid JSON</div>';
-    h += '<div style="font-size:13px;color:var(--text-2);margin-bottom:4px;">' + esc(e.message) + '</div>';
+    h += '<div style="font-size:13px;color:var(--text-2);margin-bottom:6px;">' + esc(e.message) + '</div>';
     h += '<div style="font-size:12px;color:var(--text-3);">' + input.split('\n').length + ' lines total</div>';
     h += posInfo;
     output.innerHTML = h;
@@ -707,7 +840,8 @@ function esc(s) { return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>
 function copyOutput(id) {
   const el = document.getElementById(id);
   navigator.clipboard.writeText(el.value || el.textContent).then(() => {
-    const btn = event.target; const o = btn.textContent; btn.textContent = 'Copied!'; setTimeout(() => btn.textContent = o, 1200);
+    const btn = event.target; const o = btn.textContent; btn.textContent = '✓ Copied'; btn.style.color = 'var(--green)';
+    setTimeout(() => { btn.textContent = o; btn.style.color = ''; }, 1200);
   });
 }
 </script>
