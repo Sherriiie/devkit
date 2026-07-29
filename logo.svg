@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 50" width="220" height="50">
+  <!-- Hexagonal D icon -->
+  <polygon points="20,5 38,5 45,25 38,45 20,45 13,25" fill="none" stroke="#e94560" stroke-width="2.5"/>
+  <text x="21" y="33" font-family="JetBrains Mono, monospace" font-size="22" font-weight="bold" fill="#4ecdc4">D</text>
+  <!-- Text -->
+  <text x="56" y="35" font-family="Inter, -apple-system, sans-serif" font-size="26" font-weight="800" letter-spacing="-1" fill="#eaeaea">DEVKIT</text>
+  <!-- Underline accent -->
+  <rect x="56" y="40" width="60" height="2.5" rx="1" fill="#e94560"/>
+</svg>

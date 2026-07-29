@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DevKit</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f8f9fb;
+  --surface: #ffffff;
+  --surface-2: #f1f3f9;
+  --accent: #4f46e5;
+  --accent-hover: #4338ca;
+  --accent-subtle: #eef2ff;
+  --text: #0f172a;
+  --text-2: #475569;
+  --text-3: #94a3b8;
+  --border: #e5e7eb;
+  --green: #10b981;
+  --green-bg: #ecfdf5;
+  --red: #ef4444;
+  --red-bg: #fef2f2;
+  --orange: #f59e0b;
+  --radius: 8px;
+  --mono: 'JetBrains Mono', monospace;
+  --sans: 'Inter', system-ui, sans-serif;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: var(--sans);
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* === LAYOUT === */
+.app {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  min-height: 100vh;
+}
+
+/* === SIDEBAR === */
+.sidebar {
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  padding: 24px 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-logo {
+  padding: 0 20px;
+  margin-bottom: 32px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.sidebar-logo-icon {
+  width: 32px;
+  height: 32px;
+  background: var(--accent);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--mono);
+  font-weight: 700;
+  font-size: 13px;
+  color: #fff;
+}
+
+.sidebar-logo-text {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.nav-section {
+  margin-bottom: 24px;
+}
+
+.nav-section-title {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--text-3);
+  padding: 0 20px;
+  margin-bottom: 6px;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 20px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-2);
+  transition: all .12s ease;
+  border-left: 3px solid transparent;
+}
+
+.nav-item:hover {
+  background: var(--surface-2);
+  color: var(--text);
+}
+
+.nav-item.active {
+  background: var(--accent-subtle);
+  color: var(--accent);
+  border-left-color: var(--accent);
+  font-weight: 600;
+}
+
+.nav-item-icon {
+  width: 18px;
+  height: 18px;
+  opacity: 0.6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+}
+
+.nav-item.active .nav-item-icon { opacity: 1; }
+
+/* === MAIN === */
+.main {
+  padding: 32px 40px;
+  overflow-y: auto;
+  height: 100vh;
+}
+
+.panel {
+  display: none;
+  flex-direction: column;
+  height: 100%;
+}
+
+.panel.active { display: flex; }
+
+.panel-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 20px;
+}
+
+/* === TOOLBAR === */
+.toolbar {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+  align-items: center;
+}
+
+.btn {
+  padding: 8px 16px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  font-family: var(--sans);
+  transition: all .12s ease;
+}
+
+.btn:hover {
+  background: var(--surface-2);
+  border-color: #d1d5db;
+}
+
+.btn:active { transform: scale(0.97); }
+
+.btn.primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+.btn.primary:hover { background: var(--accent-hover); }
+
+.status {
+  margin-left: auto;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-3);
+}
+
+/* === EDITOR === */
+.editor-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  flex: 1;
+  min-height: 0;
+}
+
+.editor-pane {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.editor-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-2);
+  margin-bottom: 8px;
+}
+
+textarea {
+  flex: 1;
+  resize: none;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--text);
+  font-family: var(--mono);
+  font-size: 13px;
+  line-height: 1.6;
+  padding: 14px 16px;
+  outline: none;
+  transition: border-color .15s, box-shadow .15s;
+  width: 100%;
+}
+
+textarea:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-subtle);
+}
+
+textarea::placeholder { color: var(--text-3); }
+
+/* === OUTPUT PANELS === */
+.output-panel {
+  flex: 1;
+  overflow: auto;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  font-family: var(--mono);
+  font-size: 13px;
+  line-height: 1.7;
+  min-height: 0;
+}
+
+/* === JSON SYNTAX === */
+.json-key { color: #7c3aed; }
+.json-string { color: #059669; }
+.json-number { color: #d97706; }
+.json-bool { color: #2563eb; }
+.json-null { color: var(--text-3); }
+.json-bracket { color: #9ca3af; }
+
+.json-toggle { cursor: pointer; user-select: none; }
+.json-toggle::before { content: '▾ '; font-size: 10px; color: var(--text-3); }
+.json-toggle.collapsed::before { content: '▸ '; }
+.json-children.hidden { display: none; }
+
+/* === DIFF === */
+.diff-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  flex: 1;
+  min-height: 0;
+}
+
+.diff-panel {
+  flex: 1;
+  overflow: auto;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  font-family: var(--mono);
+  font-size: 13px;
+  line-height: 1.7;
+  white-space: pre-wrap;
+}
+
+.diff-add { background: #dcfce7; color: #166534; border-radius: 2px; padding: 1px 0; }
+.diff-del { background: #fee2e2; color: #991b1b; border-radius: 2px; padding: 1px 0; }
+
+/* === VALIDATOR === */
+.cursor-bar {
+  padding: 5px 14px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-top: none;
+  border-radius: 0 0 var(--radius) var(--radius);
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text-3);
+}
+
+.result-card {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 18px;
+  border-radius: var(--radius);
+  margin-bottom: 16px;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.result-card.success { background: var(--green-bg); color: var(--green); border: 1px solid #a7f3d0; }
+.result-card.error { background: var(--red-bg); color: var(--red); border: 1px solid #fecaca; }
+
+.meta-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 12px;
+}
+
+.meta-item-label {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-3);
+  margin-bottom: 4px;
+}
+
+.meta-item-value {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+/* === SCROLLBAR === */
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #9ca3af; }
+
+/* === RESPONSIVE === */
+@media (max-width: 768px) {
+  .app { grid-template-columns: 1fr; }
+  .sidebar { display: none; }
+  .main { padding: 20px; }
+  .editor-grid, .diff-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<div class="app">
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <div class="sidebar-logo-icon">{}</div>
+      <span class="sidebar-logo-text">DevKit</span>
+    </div>
+
+    <div class="nav-section">
+      <div class="nav-section-title">JSON Tools</div>
+      <div class="nav-item active" data-panel="json-viewer">
+        <span class="nav-item-icon">{ }</span>
+        <span>Viewer / Format</span>
+      </div>
+      <div class="nav-item" data-panel="json-escape">
+        <span class="nav-item-icon">⇄</span>
+        <span>Escape / Unescape</span>
+      </div>
+      <div class="nav-item" data-panel="json-validator">
+        <span class="nav-item-icon">✓</span>
+        <span>Validator</span>
+      </div>
+    </div>
+
+    <div class="nav-section">
+      <div class="nav-section-title">Text Tools</div>
+      <div class="nav-item" data-panel="diff-checker">
+        <span class="nav-item-icon">≠</span>
+        <span>Diff Compare</span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main content -->
+  <main class="main">
+
+    <!-- JSON Viewer -->
+    <div class="panel active" id="json-viewer">
+      <h1 class="panel-title">JSON Viewer</h1>
+      <div class="toolbar">
+        <button class="btn primary" onclick="formatJSON()">Format</button>
+        <button class="btn" onclick="minifyJSON()">Minify</button>
+        <button class="btn" onclick="copyOutput('json-output')">Copy</button>
+        <button class="btn" onclick="clearJSON()">Clear</button>
+        <span class="status" id="json-status"></span>
+      </div>
+      <div class="editor-grid">
+        <div class="editor-pane">
+          <label class="editor-label">Input</label>
+          <textarea id="json-input" placeholder="Paste your JSON here..."></textarea>
+        </div>
+        <div class="editor-pane">
+          <label class="editor-label">Output</label>
+          <div class="output-panel" id="json-output"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- JSON Escape -->
+    <div class="panel" id="json-escape">
+      <h1 class="panel-title">Escape / Unescape</h1>
+      <div class="toolbar">
+        <button class="btn primary" onclick="escapeJSON()">Escape</button>
+        <button class="btn" onclick="unescapeJSON()">Unescape</button>
+        <button class="btn" onclick="copyOutput('escape-output')">Copy</button>
+        <button class="btn" onclick="clearEscape()">Clear</button>
+      </div>
+      <div class="editor-grid">
+        <div class="editor-pane">
+          <label class="editor-label">Input</label>
+          <textarea id="escape-input" placeholder="Paste text to escape or unescape..."></textarea>
+        </div>
+        <div class="editor-pane">
+          <label class="editor-label">Output</label>
+          <textarea id="escape-output" readonly placeholder="Result appears here..."></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- JSON Validator -->
+    <div class="panel" id="json-validator">
+      <h1 class="panel-title">JSON Validator</h1>
+      <div class="toolbar">
+        <button class="btn primary" onclick="validateJSON()">Validate</button>
+        <button class="btn" onclick="clearValidator()">Clear</button>
+        <span class="status" id="validator-status"></span>
+      </div>
+      <div class="editor-grid">
+        <div class="editor-pane">
+          <label class="editor-label">Input</label>
+          <textarea id="validator-input" placeholder="Paste JSON to validate..." style="border-radius:var(--radius) var(--radius) 0 0;" oninput="updateCursorPos()" onclick="updateCursorPos()" onkeyup="updateCursorPos()"></textarea>
+          <div class="cursor-bar" id="cursor-pos">Ln 1, Col 1</div>
+        </div>
+        <div class="editor-pane">
+          <label class="editor-label">Result</label>
+          <div class="output-panel" id="validator-output"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Text Diff -->
+    <div class="panel" id="diff-checker">
+      <h1 class="panel-title">Text Diff</h1>
+      <div class="toolbar">
+        <button class="btn primary" onclick="runDiff()">Compare</button>
+        <button class="btn" onclick="swapDiff()">Swap</button>
+        <button class="btn" onclick="clearDiff()">Clear</button>
+        <span class="status" id="diff-status"></span>
+      </div>
+      <div class="diff-grid" style="margin-bottom:16px;">
+        <div class="editor-pane">
+          <label class="editor-label">Original (highlighted)</label>
+          <div class="diff-panel" id="diff-output-left"></div>
+        </div>
+        <div class="editor-pane">
+          <label class="editor-label">Modified (highlighted)</label>
+          <div class="diff-panel" id="diff-output-right"></div>
+        </div>
+      </div>
+      <div class="editor-grid" style="flex:0.5;">
+        <div class="editor-pane">
+          <label class="editor-label">Original</label>
+          <textarea id="diff-left" placeholder="Paste original text..."></textarea>
+        </div>
+        <div class="editor-pane">
+          <label class="editor-label">Modified</label>
+          <textarea id="diff-right" placeholder="Paste modified text..."></textarea>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<script>
+// Navigation
+document.querySelectorAll('.nav-item').forEach(item => {
+  item.addEventListener('click', () => {
+    document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    item.classList.add('active');
+    document.getElementById(item.dataset.panel).classList.add('active');
+  });
+});
+
+// === JSON Viewer ===
+function formatJSON() {
+  const input = document.getElementById('json-input').value.trim();
+  const output = document.getElementById('json-output');
+  const status = document.getElementById('json-status');
+  if (!input) return;
+  try {
+    const obj = JSON.parse(input);
+    output.innerHTML = renderJSON(obj);
+    status.textContent = '✓ Valid JSON';
+    status.style.color = 'var(--green)';
+    bindToggles();
+  } catch(e) {
+    output.innerHTML = '<div style="margin-bottom:10px;color:var(--orange);font-size:12px;font-weight:500;">⚠ Invalid JSON — best-effort format</div>' +
+      '<pre style="white-space:pre-wrap;color:var(--text);margin:0;font-size:13px;">' + bestEffortFormat(input) + '</pre>';
+    status.textContent = '⚠ Best-effort';
+    status.style.color = 'var(--orange)';
+  }
+}
+
+function bestEffortFormat(str) {
+  let result = '', indent = 0, inString = false, escaped = false;
+  for (let i = 0; i < str.length; i++) {
+    const ch = str[i];
+    if (escaped) { result += esc(ch); escaped = false; continue; }
+    if (ch === '\\' && inString) { result += esc(ch); escaped = true; continue; }
+    if (ch === '"' && !escaped) { inString = !inString; result += esc(ch); continue; }
+    if (inString) { result += esc(ch); continue; }
+    if (ch === '{' || ch === '[') result += esc(ch) + '\n' + '  '.repeat(++indent);
+    else if (ch === '}' || ch === ']') result += '\n' + '  '.repeat(--indent) + esc(ch);
+    else if (ch === ',') result += ',\n' + '  '.repeat(indent);
+    else if (ch === ':') result += ': ';
+    else if (!/\s/.test(ch)) result += esc(ch);
+  }
+  return result;
+}
+
+function minifyJSON() {
+  const input = document.getElementById('json-input').value.trim();
+  const output = document.getElementById('json-output');
+  if (!input) return;
+  try {
+    const obj = JSON.parse(input);
+    const m = JSON.stringify(obj);
+    output.textContent = m;
+    document.getElementById('json-status').textContent = m.length + ' chars';
+    document.getElementById('json-status').style.color = 'var(--text-2)';
+  } catch(e) { output.innerHTML = '<span style="color:var(--red)">' + esc(e.message) + '</span>'; }
+}
+
+function renderJSON(val, indent = 0) {
+  if (val === null) return '<span class="json-null">null</span>';
+  if (typeof val === 'boolean') return '<span class="json-bool">' + val + '</span>';
+  if (typeof val === 'number') return '<span class="json-number">' + val + '</span>';
+  if (typeof val === 'string') return '<span class="json-string">"' + esc(val) + '"</span>';
+  if (Array.isArray(val)) {
+    if (!val.length) return '<span class="json-bracket">[]</span>';
+    let h = '<span class="json-toggle json-bracket">[</span><div class="json-children" style="padding-left:18px;">';
+    val.forEach((v, i) => { h += '<div>' + renderJSON(v, indent+1) + (i < val.length-1 ? '<span class="json-bracket">,</span>' : '') + '</div>'; });
+    return h + '</div><span class="json-bracket">]</span>';
+  }
+  if (typeof val === 'object') {
+    const keys = Object.keys(val);
+    if (!keys.length) return '<span class="json-bracket">{}</span>';
+    let h = '<span class="json-toggle json-bracket">{</span><div class="json-children" style="padding-left:18px;">';
+    keys.forEach((k, i) => { h += '<div><span class="json-key">"' + esc(k) + '"</span>: ' + renderJSON(val[k], indent+1) + (i < keys.length-1 ? '<span class="json-bracket">,</span>' : '') + '</div>'; });
+    return h + '</div><span class="json-bracket">}</span>';
+  }
+  return String(val);
+}
+
+function bindToggles() {
+  document.querySelectorAll('.json-toggle').forEach(el => {
+    el.addEventListener('click', () => {
+      el.classList.toggle('collapsed');
+      const c = el.nextElementSibling;
+      if (c && c.classList.contains('json-children')) c.classList.toggle('hidden');
+    });
+  });
+}
+
+function clearJSON() {
+  document.getElementById('json-input').value = '';
+  document.getElementById('json-output').innerHTML = '';
+  document.getElementById('json-status').textContent = '';
+}
+
+// === Diff ===
+function runDiff() {
+  const left = document.getElementById('diff-left').value;
+  const right = document.getElementById('diff-right').value;
+  const oL = document.getElementById('diff-output-left');
+  const oR = document.getElementById('diff-output-right');
+  const leftLines = left.split('\n'), rightLines = right.split('\n');
+  const lcs = lcsLines(leftLines, rightLines);
+  let hL = '', hR = '', li = 0, ri = 0, ci = 0, adds = 0, dels = 0;
+
+  while (li < leftLines.length || ri < rightLines.length) {
+    if (ci < lcs.length && li < leftLines.length && ri < rightLines.length && leftLines[li] === lcs[ci] && rightLines[ri] === lcs[ci]) {
+      hL += '<div>' + esc(leftLines[li]) + '&nbsp;</div>'; hR += '<div>' + esc(rightLines[ri]) + '&nbsp;</div>'; li++; ri++; ci++;
+    } else if (ci < lcs.length && ri < rightLines.length && rightLines[ri] === lcs[ci]) {
+      hL += '<div class="diff-del">' + esc(leftLines[li]) + '&nbsp;</div>'; hR += '<div style="opacity:.25">&nbsp;</div>'; li++; dels++;
+    } else if (ci < lcs.length && li < leftLines.length && leftLines[li] === lcs[ci]) {
+      hL += '<div style="opacity:.25">&nbsp;</div>'; hR += '<div class="diff-add">' + esc(rightLines[ri]) + '&nbsp;</div>'; ri++; adds++;
+    } else {
+      if (li < leftLines.length && ri < rightLines.length) { hL += '<div class="diff-del">' + esc(leftLines[li]) + '&nbsp;</div>'; hR += '<div class="diff-add">' + esc(rightLines[ri]) + '&nbsp;</div>'; li++; ri++; dels++; adds++; }
+      else if (li < leftLines.length) { hL += '<div class="diff-del">' + esc(leftLines[li]) + '&nbsp;</div>'; hR += '<div style="opacity:.25">&nbsp;</div>'; li++; dels++; }
+      else if (ri < rightLines.length) { hL += '<div style="opacity:.25">&nbsp;</div>'; hR += '<div class="diff-add">' + esc(rightLines[ri]) + '&nbsp;</div>'; ri++; adds++; }
+    }
+  }
+  oL.innerHTML = hL || '<span style="color:var(--text-3)">No content</span>';
+  oR.innerHTML = hR || '<span style="color:var(--text-3)">No content</span>';
+  document.getElementById('diff-status').textContent = '+' + adds + ' / −' + dels;
+  oL.onscroll = () => { oR.scrollTop = oL.scrollTop; };
+  oR.onscroll = () => { oL.scrollTop = oR.scrollTop; };
+}
+
+function lcsLines(a, b) {
+  const m = a.length, n = b.length;
+  const dp = Array.from({length: m+1}, () => Array(n+1).fill(0));
+  for (let i=1;i<=m;i++) for (let j=1;j<=n;j++) dp[i][j] = a[i-1]===b[j-1] ? dp[i-1][j-1]+1 : Math.max(dp[i-1][j], dp[i][j-1]);
+  const r = []; let i=m, j=n;
+  while(i>0&&j>0) { if(a[i-1]===b[j-1]){r.unshift(a[i-1]);i--;j--;} else if(dp[i-1][j]>dp[i][j-1])i--; else j--; }
+  return r;
+}
+
+function swapDiff() { const l=document.getElementById('diff-left'),r=document.getElementById('diff-right');[l.value,r.value]=[r.value,l.value]; }
+function clearDiff() { document.getElementById('diff-left').value='';document.getElementById('diff-right').value='';document.getElementById('diff-output-left').innerHTML='';document.getElementById('diff-output-right').innerHTML='';document.getElementById('diff-status').textContent=''; }
+
+// === Escape ===
+function escapeJSON() { document.getElementById('escape-output').value = JSON.stringify(document.getElementById('escape-input').value); }
+function unescapeJSON() {
+  const input = document.getElementById('escape-input').value;
+  document.getElementById('escape-output').value = input.replace(/\\n/g,'\n').replace(/\\t/g,'\t').replace(/\\r/g,'\r').replace(/\\"/g,'"').replace(/\\\\/g,'\\');
+}
+function clearEscape() { document.getElementById('escape-input').value='';document.getElementById('escape-output').value=''; }
+
+// === Validator ===
+function validateJSON() {
+  const input = document.getElementById('validator-input').value.trim();
+  const output = document.getElementById('validator-output');
+  const status = document.getElementById('validator-status');
+  if (!input) return;
+  try {
+    const obj = JSON.parse(input);
+    const type = Array.isArray(obj) ? 'Array' : typeof obj;
+    const size = typeof obj === 'object' && obj !== null ? Object.keys(obj).length : null;
+    let h = '<div class="result-card success">✓ Valid JSON</div>';
+    h += '<div class="meta-grid">';
+    h += '<div><div class="meta-item-label">Type</div><div class="meta-item-value">' + type + '</div></div>';
+    if (size !== null) h += '<div><div class="meta-item-label">Entries</div><div class="meta-item-value">' + size + '</div></div>';
+    h += '<div><div class="meta-item-label">Size</div><div class="meta-item-value">' + input.length + '</div></div>';
+    h += '<div><div class="meta-item-label">Lines</div><div class="meta-item-value">' + input.split('\n').length + '</div></div>';
+    h += '<div><div class="meta-item-label">Depth</div><div class="meta-item-value">' + getDepth(obj) + '</div></div>';
+    h += '</div>';
+    output.innerHTML = h;
+    status.textContent = '✓ Valid'; status.style.color = 'var(--green)';
+  } catch(e) {
+    const match = e.message.match(/position (\d+)/);
+    let posInfo = '';
+    if (match) {
+      const pos = parseInt(match[1]);
+      const line = input.substring(0, pos).split('\n').length;
+      const col = pos - input.lastIndexOf('\n', pos - 1);
+      const before = input.substring(Math.max(0, pos-30), pos);
+      const after = input.substring(pos, pos+30);
+      posInfo = '<div style="margin-top:14px;padding:12px 14px;background:var(--surface-2);border-radius:6px;">';
+      posInfo += '<div style="font-size:11px;color:var(--text-3);margin-bottom:6px;">Line ' + line + ', Col ' + col + '</div>';
+      posInfo += '<code style="font-size:12px;word-break:break-all;">' + esc(before) + '<span style="background:var(--red);color:#fff;padding:1px 3px;border-radius:2px;font-weight:700;">▌</span>' + esc(after) + '</code></div>';
+    }
+    let h = '<div class="result-card error">✗ Invalid JSON</div>';
+    h += '<div style="font-size:13px;color:var(--text-2);margin-bottom:4px;">' + esc(e.message) + '</div>';
+    h += '<div style="font-size:12px;color:var(--text-3);">' + input.split('\n').length + ' lines total</div>';
+    h += posInfo;
+    output.innerHTML = h;
+    status.textContent = '✗ Invalid'; status.style.color = 'var(--red)';
+  }
+}
+
+function getDepth(obj) {
+  if (typeof obj !== 'object' || obj === null) return 0;
+  const v = Object.values(obj);
+  return v.length ? 1 + Math.max(...v.map(getDepth)) : 1;
+}
+
+function clearValidator() {
+  document.getElementById('validator-input').value='';document.getElementById('validator-output').innerHTML='';
+  document.getElementById('validator-status').textContent='';document.getElementById('cursor-pos').textContent='Ln 1, Col 1';
+}
+
+function updateCursorPos() {
+  const t = document.getElementById('validator-input');
+  const pos = t.selectionStart;
+  const text = t.value.substring(0, pos);
+  const ln = text.split('\n').length;
+  const col = pos - text.lastIndexOf('\n');
+  document.getElementById('cursor-pos').textContent = 'Ln ' + ln + ', Col ' + col + '  ·  ' + t.value.split('\n').length + ' lines';
+}
+
+// Utils
+function esc(s) { return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function copyOutput(id) {
+  const el = document.getElementById(id);
+  navigator.clipboard.writeText(el.value || el.textContent).then(() => {
+    const btn = event.target; const o = btn.textContent; btn.textContent = 'Copied!'; setTimeout(() => btn.textContent = o, 1200);
+  });
+}
+</script>
+</body>
+</html>

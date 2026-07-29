@@ -1,0 +1,8 @@
+{
+  "name": "devkit",
+  "version": "1.0.0",
+  "description": "DevKit - JSON Viewer, Escape, Validator & Text Diff",
+  "scripts": {
+    "start": "npx serve ."
+  }
+}
